@@ -9,7 +9,7 @@ public class EmailSender {
     public static void sendEmail(String toEmail, String subject, String messageText) {
         // Replace with your email credentials
         final String fromEmail = "albinshala81@gmail.com";
-        final String password = "xdvz vlaj dovl wosq";
+        final String password = "bqbl gmkx nrnn ftji";
 
         // Set properties for the mail session
         Properties props = new Properties();
