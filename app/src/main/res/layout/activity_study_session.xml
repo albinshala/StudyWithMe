@@ -1,10 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.StudySessionActivity">
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Header Section -->
+        <TextView
+            android:id="@+id/tvStudySessionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Study Session"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="16dp" />
+
+        <!-- Timer Display -->
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tvStudySessionTitle"
+            android:layout_marginTop="16dp" />
+
+        <!-- Start and Stop Buttons -->
+        <LinearLayout
+            android:id="@+id/llSessionControls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tvTimer"
+            android:layout_marginTop="24dp"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btnStartSession"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Start" />
+
+            <Button
+                android:id="@+id/btnStopSession"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Stop" />
+        </LinearLayout>
+
+        <!-- Session Notes Section -->
+        <EditText
+            android:id="@+id/etSessionNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Write your notes here..."
+            android:layout_below="@id/llSessionControls"
+            android:layout_marginTop="24dp"
+            android:background="@android:drawable/edit_text" />
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btnSaveSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save Session"
+            android:layout_below="@id/etSessionNotes"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <!-- Sessions Section -->
+        <LinearLayout
+            android:id="@+id/sessionSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/btnSaveSession"
+            android:layout_marginTop="16dp" />
+    </RelativeLayout>
+</ScrollView>
