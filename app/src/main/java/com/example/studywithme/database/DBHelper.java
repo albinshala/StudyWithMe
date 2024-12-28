@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
-        super(context, "StudyWithMe.db", null, 1);
+        super(context, "StudyWithMe.db", null, 1); 
     }
 
     @Override
@@ -18,7 +18,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE StudySessions(id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, subject TEXT, date TEXT, time TEXT, duration TEXT, description TEXT)");
         db.execSQL("CREATE TABLE Goals(id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, goal TEXT, dueDate TEXT, isCompleted INTEGER)");
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -76,6 +75,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return rowsAffected > 0;
     }
 
+    public boolean updatePassword(String email, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password", newPassword);
+
+        int rowsAffected = db.update("Users", values, "email = ?", new String[]{email});
+        return rowsAffected > 0;
+    }
 
     public String getOtp(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -97,5 +104,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return isValid;
     }
 
+    public boolean deleteStudySession(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("StudySessions", "id = ?", new String[]{String.valueOf(id)}) > 0;
+    }
 
+    public boolean deleteGoal(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("Goals", "id = ?", new String[]{String.valueOf(id)}) > 0;
+    }
 }
