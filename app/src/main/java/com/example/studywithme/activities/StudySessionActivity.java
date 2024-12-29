@@ -57,7 +57,32 @@ public class StudySessionActivity extends AppCompatActivity {
         // Load existing study sessions
         loadStudySessions();
     }
-    
+
+    private void startTimer() {
+        if (!isRunning) {
+            startTime = SystemClock.uptimeMillis();
+            timerHandler.postDelayed(updateTimerThread, 0);
+            isRunning = true;
+        }
+    }
+
+    private void stopTimer() {
+        if (isRunning) {
+            timerHandler.removeCallbacks(updateTimerThread);
+            isRunning = false;
+        }
+    }
+
+    private Runnable updateTimerThread = new Runnable() {
+        @Override
+        public void run() {
+            long timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            int seconds = (int) (timeInMilliseconds / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            tvTimer.setText(String.format("%02d:%02d:%02d", minutes / 60, minutes % 60, seconds));
+            timerHandler.postDelayed(this, 1000);
         }
     };
 
@@ -91,7 +116,8 @@ public class StudySessionActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to save study session", Toast.LENGTH_SHORT).show();
         }
     }
-private void loadStudySessions() {
+
+    private void loadStudySessions() {
         sessionSection.removeAllViews(); // Clear existing views
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT id, subject, date, time, duration, description FROM StudySessions", null);
@@ -145,4 +171,3 @@ private void loadStudySessions() {
         dbHelper.close();
     }
 }
-
