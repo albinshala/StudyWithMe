@@ -57,3 +57,38 @@ public class StudySessionActivity extends AppCompatActivity {
         // Load existing study sessions
         loadStudySessions();
     }
+    
+        }
+    };
+
+    private void saveStudySession() {
+        String notes = etSessionNotes.getText().toString().trim();
+        String duration = tvTimer.getText().toString().trim(); // Get duration from timer
+        String sessionTitle = "Study Session"; // Default title for the session
+
+        // Fetch current date and time
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+
+        if (notes.isEmpty()) {
+            Toast.makeText(this, "Please enter session notes", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        boolean isInserted = dbHelper.insertStudySession(sessionTitle, date, time, duration, notes);
+
+        if (isInserted) {
+            Toast.makeText(this, "Study session saved successfully", Toast.LENGTH_SHORT).show();
+
+            // Refresh sessions and return to DashboardActivity
+            loadStudySessions();
+            Intent intent = new Intent(this, DashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("fromOtherActivity", true); // Set flag to indicate return
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this, "Failed to save study session", Toast.LENGTH_SHORT).show();
+        }
+    }
+
