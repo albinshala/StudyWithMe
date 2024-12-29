@@ -1,53 +1,49 @@
-<!-- goal_activity_layout.xml -->
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".activities.GoalActivity">
+    android:padding="16dp">
 
-    <!-- Header Section -->
-    <TextView
-        android:id="@+id/tvGoalTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Goals"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:padding="16dp"/>
-
-    <!-- Add Goal Button -->
-    <Button
-        android:id="@+id/btnAddGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Goal"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/tvGoalTitle"/>
-
-    <!-- Goals List -->
-    <ListView
-        android:id="@+id/lvGoals"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnAddGoal"
-        android:layout_marginTop="16dp"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"/>
+        android:layout_height="wrap_content">
 
-    <!-- Footer Section -->
-    <TextView
-        android:id="@+id/tvGoalFooter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set goals to achieve your dreams!"
-        android:textSize="16sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="16dp"/>
+        <!-- Goal Description Input -->
+        <EditText
+            android:id="@+id/etGoalDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your goal description"
+            android:layout_marginBottom="16dp"
+            android:inputType="text" />
 
-</RelativeLayout>
+        <!-- Due Date Input -->
+        <EditText
+            android:id="@+id/etDueDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Pick a due date"
+            android:focusable="false"
+            android:layout_below="@id/etGoalDescription"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Save Goal Button -->
+        <Button
+            android:id="@+id/btnSaveGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save Goal"
+            android:layout_below="@id/etDueDate"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp" />
+
+        <!-- Goals Section -->
+        <LinearLayout
+            android:id="@+id/goalsSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/btnSaveGoal"
+            android:layout_marginTop="16dp" />
+    </RelativeLayout>
+</ScrollView>
