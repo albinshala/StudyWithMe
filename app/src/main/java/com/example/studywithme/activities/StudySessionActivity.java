@@ -91,4 +91,58 @@ public class StudySessionActivity extends AppCompatActivity {
             Toast.makeText(this, "Failed to save study session", Toast.LENGTH_SHORT).show();
         }
     }
+private void loadStudySessions() {
+        sessionSection.removeAllViews(); // Clear existing views
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id, subject, date, time, duration, description FROM StudySessions", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String subject = cursor.getString(cursor.getColumnIndexOrThrow("subject"));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                String time = cursor.getString(cursor.getColumnIndexOrThrow("time"));
+                String duration = cursor.getString(cursor.getColumnIndexOrThrow("duration"));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+
+                // Create a layout to hold session details and the delete button
+                LinearLayout sessionLayout = new LinearLayout(this);
+                sessionLayout.setOrientation(LinearLayout.VERTICAL);
+                sessionLayout.setPadding(8, 8, 8, 8);
+                sessionLayout.setBackgroundResource(R.drawable.card_background);
+
+                // TextView for session details
+                TextView sessionView = new TextView(this);
+                sessionView.setText("Subject: " + subject + "\nDate: " + date + "\nTime: " + time +
+                        "\nDuration: " + duration + "\nDescription: " + description);
+                sessionLayout.addView(sessionView);
+
+                // Delete Button
+                Button deleteButton = new Button(this);
+                deleteButton.setText("Delete");
+                deleteButton.setOnClickListener(v -> deleteStudySession(id));
+                sessionLayout.addView(deleteButton);
+
+                sessionSection.addView(sessionLayout);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+    }
+
+    private void deleteStudySession(int id) {
+        boolean isDeleted = dbHelper.deleteStudySession(id);
+        if (isDeleted) {
+            loadStudySessions(); // Refresh the study sessions
+            Toast.makeText(this, "Study session deleted successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Failed to delete study session", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHelper.close();
+    }
+}
 
